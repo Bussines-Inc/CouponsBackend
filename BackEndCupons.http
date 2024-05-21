@@ -1,0 +1,6 @@
+@BackEndCupons_HostAddress = http://localhost:5095
+
+GET {{BackEndCupons_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
