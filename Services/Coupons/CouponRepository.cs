@@ -1,21 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BackEndCupons.Data;
 using BackEndCupons.Models;
-using Microsoft.AspNetCore.Http.HttpResults;
 
 namespace BackEndCupons.Services.Coupons
 {
     public class CouponRepository : ICouponRepository
     {
-        private readonly CouponsContext  _context;
+        private readonly CouponsContext _context;
+
         public CouponRepository(CouponsContext context)
         {
             _context = context;
         }
-        public void add(Coupon coupon)
+
+        public void Add(Coupon coupon)
         {
             _context.Coupon.Add(coupon);
             _context.SaveChanges();
@@ -23,13 +23,12 @@ namespace BackEndCupons.Services.Coupons
 
         public IEnumerable<Coupon> GetAll()
         {
-            return _context.Coupon.ToList();            
+            return _context.Coupon.ToList();
         }
 
         public IEnumerable<Coupon> GetAllByUser(int id)
         {
-            var cupons = _context.Coupon.Where(c=>c.IdMarketingUser==id);
-            return cupons.ToList();
+            return _context.Coupon.Where(c => c.IdMarketingUser == id).ToList();
         }
 
         public Coupon GetById(int id)
@@ -37,19 +36,17 @@ namespace BackEndCupons.Services.Coupons
             return _context.Coupon.Find(id);
         }
 
-        public void remove(int id, int Idmarketinguser)
+        public void Remove(int id, int userId)
         {
-            var cupon= _context.Coupon.FirstOrDefault(c=>c.Id == id && c.IdMarketingUser == Idmarketinguser);
-            
-            if(cupon != null)
+            var coupon = _context.Coupon.FirstOrDefault(c => c.Id == id && c.IdMarketingUser == userId);
+
+            if (coupon == null)
             {
-                _context.Coupon.Remove(cupon);
-                _context.SaveChanges();
+                throw new Exception("Cupón no encontrado o no tienes permiso para eliminarlo");
             }
-            else
-            {
-                throw new Exception("Cupón no encontrado");
-            }   
+
+            _context.Coupon.Remove(coupon);
+            _context.SaveChanges();
         }
 
         public IEnumerable<Coupon> Search()
@@ -57,11 +54,33 @@ namespace BackEndCupons.Services.Coupons
             throw new NotImplementedException();
         }
 
-        public void update(Coupon coupon, int id, int Idmarketinguser)
+        public void Update(Coupon coupon, int id, int userId)
         {
-            var cupon = _context.Coupon.FirstOrDefault(c=>c.Id == id && c.IdMarketingUser == Idmarketinguser);
-            _context.Coupon.Update(coupon);
-            _context.SaveChanges();
+            var existingCoupon = _context.Coupon.FirstOrDefault(c => c.Id == id && c.IdMarketingUser == userId);
+
+            if (existingCoupon != null)
+            {
+                existingCoupon.CouponCode = coupon.CouponCode;
+                existingCoupon.Description = coupon.Description;
+                existingCoupon.CreationDate = coupon.CreationDate;
+                existingCoupon.StartDate = coupon.StartDate;
+                existingCoupon.ExpirationDate = coupon.ExpirationDate;
+                existingCoupon.Status = coupon.Status;
+                existingCoupon.DiscountRate = coupon.DiscountRate;
+                existingCoupon.DiscountValue = coupon.DiscountValue;
+                existingCoupon.LimitType = coupon.LimitType;
+                existingCoupon.MaximumUses = coupon.MaximumUses;
+                existingCoupon.MinimumPurchaseAmount = coupon.MinimumPurchaseAmount;
+                existingCoupon.MaximumDiscountAmount = coupon.MaximumDiscountAmount;
+                existingCoupon.IdMarketingUser = coupon.IdMarketingUser;
+
+                _context.Coupon.Update(existingCoupon);
+                _context.SaveChanges();
+            }
+            else
+            {
+                throw new Exception("Cupón no encontrado o no tienes permiso para actualizarlo");
+            }
         }
     }
 }
