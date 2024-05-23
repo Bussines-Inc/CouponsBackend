@@ -6,8 +6,6 @@ using BackEndCupons.Models;
 
 namespace BackEndCupons.Controllers.Coupons
 {
-    [ApiController]
-    [Route("api/[controller]")]
     public class CouponsDeleteController : ControllerBase
     {
         private readonly ICouponRepository _couponRepository;
@@ -17,7 +15,9 @@ namespace BackEndCupons.Controllers.Coupons
             _couponRepository = couponRepository;
         }
 
-        [HttpDelete("{id}")]
+        [HttpDelete]
+        [Route("api/DeleteCoupon/{id}")]
+
         public IActionResult DeleteCoupon(int id, [FromBody] MarketingUser user)
         {
             try
