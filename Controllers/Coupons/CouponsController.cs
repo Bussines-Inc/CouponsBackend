@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using BackEndCupons.Models;
 using BackEndCupons.Services.Coupons;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,62 @@ namespace BackEndCupons.Controllers.Coupons
             _couponrepository = couponrepository;
         }
 
+        [HttpGet]
+        [Route("api/Coupons")]
+        public IActionResult GetCoupons()
+        {
+            try
+            {
+                var coupons = _couponrepository.GetAll();
+                if (coupons.Count() <1)
+                {
+                    return BadRequest("No existen cupones");
+                }
+                else
+                {
+                    return Ok(coupons);
+                }
+
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(203, new { message = ex.Message });
+            }
+        }
+
+        [HttpGet]
+        [Route("api/Coupons/{id}")]
+        public IActionResult Details(int id)
+        {
+            try
+            {
+                return Ok(_couponrepository.GetById(id));
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(203, ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("api/MyCoupons/{id}")]
+        public IActionResult GetAllByUser(int id)
+        {
         
-        
+             try
+            {
+                var cupones = _couponrepository.GetAllByUser(id);
+                 if(cupones.Count() < 1){
+                    return BadRequest("No tienes cupones");
+                 }else{
+                    return Ok(cupones);
+                 }
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(203,ex.Message);
+            }
+        }
+
     }
 }

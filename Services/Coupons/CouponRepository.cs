@@ -23,18 +23,36 @@ namespace BackEndCupons.Services.Coupons
 
         public IEnumerable<Coupon> GetAll()
         {
-            return _context.Coupon.ToList();            
+            var cupon = _context.Coupon.ToList();
+            return cupon;
+            // if (cupon != null)
+            // {
+            //     return _context.Coupon.ToList();            
+            // }
+            // else
+            // {
+            //     throw new Exception("Cupónes no encontrado ");
+            // }
         }
 
         public IEnumerable<Coupon> GetAllByUser(int id)
         {
-            var cupons = _context.Coupon.Where(c=>c.IdMarketingUser==id);
-            return cupons.ToList();
+            var cupons = _context.Coupon.Where(c=>c.IdMarketingUser==id).ToList();
+            return cupons;
         }
 
         public Coupon GetById(int id)
+
         {
-            return _context.Coupon.Find(id);
+            var cupon = _context.Coupon.Find(id);
+            if (cupon != null)
+            {
+                return cupon;
+            }
+            else
+            {
+                throw new Exception("Cupon no encontrado");
+            }
         }
 
         public void remove(int id, int Idmarketinguser)
