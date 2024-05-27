@@ -17,9 +17,9 @@ namespace BackEndCupons.Models
         public string DiscountRate { get; set; }
         public int DiscountValue { get; set; }
         public string LimitType { get; set; }
-        public int MaximumUses { get; set; }
-        public int MinimumPurchaseAmount { get; set; }
-        public int MaximumDiscountAmount { get; set; }
+        public int? MaximumUses { get; set; }
+        public int? MinimumPurchaseAmount { get; set; }
+        public int? MaximumDiscountAmount { get; set; }
         public int IdMarketingUser { get; set;}
     }
 }

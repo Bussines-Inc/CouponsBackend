@@ -17,6 +17,10 @@ namespace BackEndCupons.Services.Coupons
 
         public void Add(Coupon coupon)
         {
+
+            coupon.Status = "Created";
+            coupon.CreationDate = DateTime.UtcNow;
+
             _context.Coupon.Add(coupon);
             _context.SaveChanges();
         }
@@ -78,38 +82,33 @@ namespace BackEndCupons.Services.Coupons
             throw new NotImplementedException();
         }
 
-        public void Update(Coupon coupon, int id, int userId)
-        {
-            var existingCoupon = _context.Coupon.FirstOrDefault(c => c.Id == id && c.IdMarketingUser == userId);
-
-            if (existingCoupon != null)
-            {
-                existingCoupon.CouponCode = coupon.CouponCode;
-                existingCoupon.Description = coupon.Description;
-                existingCoupon.CreationDate = coupon.CreationDate;
-                existingCoupon.StartDate = coupon.StartDate;
-                existingCoupon.ExpirationDate = coupon.ExpirationDate;
-                existingCoupon.Status = coupon.Status;
-                existingCoupon.DiscountRate = coupon.DiscountRate;
-                existingCoupon.DiscountValue = coupon.DiscountValue;
-                existingCoupon.LimitType = coupon.LimitType;
-                existingCoupon.MaximumUses = coupon.MaximumUses;
-                existingCoupon.MinimumPurchaseAmount = coupon.MinimumPurchaseAmount;
-                existingCoupon.MaximumDiscountAmount = coupon.MaximumDiscountAmount;
-                existingCoupon.IdMarketingUser = coupon.IdMarketingUser;
-
-                _context.Coupon.Update(existingCoupon);
-                _context.SaveChanges();
-            }
-            else
-            {
-                throw new Exception("Cupón no encontrado o no tienes permiso para actualizarlo");
-            }
-        }
-
         public void update(Coupon coupon, int id, int Idmarketinguser)
         {
-            throw new NotImplementedException();
+
+            var couponResult = _context.Coupon.FirstOrDefault(c=>c.Id == id && c.IdMarketingUser == Idmarketinguser);
+
+            if(couponResult != null)
+            {
+                couponResult.CouponCode = coupon.CouponCode;
+                couponResult.Description = coupon.Description;
+                couponResult.StartDate = coupon.StartDate;
+                couponResult.ExpirationDate = coupon.ExpirationDate;
+                couponResult.DiscountRate = coupon.DiscountRate;
+                couponResult.DiscountValue = coupon.DiscountValue;
+                couponResult.LimitType = coupon.LimitType;
+                couponResult.MaximumUses = coupon.MaximumUses;
+                couponResult.MinimumPurchaseAmount = coupon.MinimumPurchaseAmount;
+                couponResult.MaximumDiscountAmount = coupon.MaximumDiscountAmount;
+                
+                _context.Coupon.Update(couponResult);
+                _context.SaveChanges();
+            }
+
+            else
+            {
+                throw new Exception("Cupón no encontrado o no tienes permiso para editarlo");
+            }
+
         }
     }
 }
