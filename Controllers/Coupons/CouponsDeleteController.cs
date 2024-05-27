@@ -1,18 +1,39 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using BackEndCupons.Services.Coupons;
 using Microsoft.AspNetCore.Mvc;
+using BackEndCupons.Services.Coupons;
+using BackEndCupons.Models;
 
 namespace BackEndCupons.Controllers.Coupons
 {
     public class CouponsDeleteController : ControllerBase
     {
-        private readonly ICouponRepository _couponrepository;
-        public CouponsDeleteController(ICouponRepository couponrepository)
+        private readonly ICouponRepository _couponRepository;
+
+        public CouponsDeleteController(ICouponRepository couponRepository)
         {
-            _couponrepository = couponrepository;
+            _couponRepository = couponRepository;
+        }
+
+        [HttpDelete]
+        [Route("api/DeleteCoupon/{id}")]
+
+        public IActionResult DeleteCoupon(int id, [FromBody] MarketingUser user)
+        {
+            try
+            {
+                _couponRepository.Remove(id, user.Id);
+                return Ok(new { message = "Cupón eliminado con éxito" });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(403, new { message = ex.Message });
+            }
         }
     }
+
+    // public class DeleteCouponRequest
+    // {
+    //     public int UserId { get; set; } // ID del usuario que realiza la solicitud
+    // }
 }
