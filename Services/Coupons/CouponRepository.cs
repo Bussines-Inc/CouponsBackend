@@ -23,17 +23,36 @@ namespace BackEndCupons.Services.Coupons
 
         public IEnumerable<Coupon> GetAll()
         {
-            return _context.Coupon.ToList();
+            var cupon = _context.Coupon.ToList();
+            return cupon;
+            // if (cupon != null)
+            // {
+            //     return _context.Coupon.ToList();            
+            // }
+            // else
+            // {
+            //     throw new Exception("Cupónes no encontrado ");
+            // }
         }
 
         public IEnumerable<Coupon> GetAllByUser(int id)
         {
-            return _context.Coupon.Where(c => c.IdMarketingUser == id).ToList();
+            var cupons = _context.Coupon.Where(c=>c.IdMarketingUser==id).ToList();
+            return cupons;
         }
 
         public Coupon GetById(int id)
+
         {
-            return _context.Coupon.Find(id);
+            var cupon = _context.Coupon.Find(id);
+            if (cupon != null)
+            {
+                return cupon;
+            }
+            else
+            {
+                throw new Exception("Cupon no encontrado");
+            }
         }
 
         public void Remove(int id, int userId)
@@ -47,6 +66,11 @@ namespace BackEndCupons.Services.Coupons
 
             _context.Coupon.Remove(coupon);
             _context.SaveChanges();
+        }
+
+        public void remove(int id, int Idmarketinguser)
+        {
+            throw new NotImplementedException();
         }
 
         public IEnumerable<Coupon> Search()
@@ -81,6 +105,11 @@ namespace BackEndCupons.Services.Coupons
             {
                 throw new Exception("Cupón no encontrado o no tienes permiso para actualizarlo");
             }
+        }
+
+        public void update(Coupon coupon, int id, int Idmarketinguser)
+        {
+            throw new NotImplementedException();
         }
     }
 }
