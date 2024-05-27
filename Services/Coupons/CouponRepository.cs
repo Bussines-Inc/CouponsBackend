@@ -17,6 +17,10 @@ namespace BackEndCupons.Services.Coupons
         }
         public void add(Coupon coupon)
         {
+
+            coupon.Status = "Created";
+            coupon.CreationDate = DateTime.UtcNow;
+
             _context.Coupon.Add(coupon);
             _context.SaveChanges();
         }
@@ -59,9 +63,31 @@ namespace BackEndCupons.Services.Coupons
 
         public void update(Coupon coupon, int id, int Idmarketinguser)
         {
-            var cupon = _context.Coupon.FirstOrDefault(c=>c.Id == id && c.IdMarketingUser == Idmarketinguser);
-            _context.Coupon.Update(coupon);
-            _context.SaveChanges();
+            var couponResult = _context.Coupon.FirstOrDefault(c=>c.Id == id && c.IdMarketingUser == Idmarketinguser);
+
+            if(couponResult != null)
+            {
+                couponResult.CouponCode = coupon.CouponCode;
+                couponResult.Description = coupon.Description;
+                couponResult.StartDate = coupon.StartDate;
+                couponResult.ExpirationDate = coupon.ExpirationDate;
+                couponResult.DiscountRate = coupon.DiscountRate;
+                couponResult.DiscountValue = coupon.DiscountValue;
+                couponResult.LimitType = coupon.LimitType;
+                couponResult.MaximumUses = coupon.MaximumUses;
+                couponResult.MinimumPurchaseAmount = coupon.MinimumPurchaseAmount;
+                couponResult.MaximumDiscountAmount = coupon.MaximumDiscountAmount;
+                
+                _context.Coupon.Update(couponResult);
+                _context.SaveChanges();
+            }
+
+            else
+            {
+                throw new Exception("Cupón no encontrado o no tienes permiso para editarlo");
+            }
+
+           
         }
     }
 }
