@@ -12,5 +12,6 @@ namespace BackEndCupons.Services.Coupons
         void Add(Coupon coupon);
         void Remove(int id, int userId);  // Modificado para incluir el ID del usuario
         void Update(Coupon coupon, int id, int userId);
+    
     }
 }

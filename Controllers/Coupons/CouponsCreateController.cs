@@ -22,12 +22,14 @@ namespace BackEndCupons.Controllers.Coupons
         {
             try
             {   
-                 _couponrepository.add(coupon);
+
+                 _couponrepository.Add(coupon);
                 return Ok("Cupon creado con exito");
             }
             catch (Exception ex)
             {
-                return BadRequest(ex.Message);
+                return BadRequest(ModelState);
+              
             }
            
         }

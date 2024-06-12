@@ -22,7 +22,7 @@ namespace BackEndCupons.Controllers.Coupons
         {
            try
            {
-                _couponrepository.update(coupon, id, idMarketingUser);
+                _couponrepository.Update(coupon, id, idMarketingUser);
                 return Ok("Cupon actualizado con exito");
            }
            catch(Exception e)
