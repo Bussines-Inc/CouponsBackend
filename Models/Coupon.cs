@@ -10,7 +10,7 @@ namespace BackEndCupons.Models
         public int Id { get; set; }
         public string CouponCode { get; set; }
         public string Description { get; set; }
-         public int amount_uses { get; set; }
+        public int ammount_uses { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime ExpirationDate { get; set; }
