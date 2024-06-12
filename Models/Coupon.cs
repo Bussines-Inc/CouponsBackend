@@ -22,5 +22,6 @@ namespace BackEndCupons.Models
         public int? MinimumPurchaseAmount { get; set; }
         public int? MaximumDiscountAmount { get; set; }
         public int IdMarketingUser { get; set;}
+        public ICollection<Coupons_MarketplaceUser> Coupons_MarketplaceUser { get; set; }
     }
 }

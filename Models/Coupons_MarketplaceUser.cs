@@ -10,5 +10,7 @@ namespace BackEndCupons.Models
         public int Id { get; set; }
         public int IdCoupon { get; set; }
         public int IdUserMarketPlace  { get; set; }
+        public MarketingUser marketingUser { get; set; }
+        public Coupon coupon { get; set; }
     }
 }

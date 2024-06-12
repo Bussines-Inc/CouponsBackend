@@ -14,6 +14,9 @@ namespace BackEndCupons.Models
         public int PurchaseId { get; set; }
         public int 	IdCoupon { get; set; }
         public int 	IdMarketplaceUser { get; set; }
-    
+        // public Coupon Coupon { get; set; }
+        // public Coupons_MarketplaceUser Coupons_MarketplaceUser { get; set;}
+        //public MarketplaceUser MarketplaceUser { get; set;}
+
     }
 }
