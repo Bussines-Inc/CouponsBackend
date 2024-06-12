@@ -10,6 +10,7 @@ namespace BackEndCupons.Models
         public int Id { get; set; }
         public string CouponCode { get; set; }
         public string Description { get; set; }
+         public int amount_uses { get; set; }
         public DateTime CreationDate { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime ExpirationDate { get; set; }
@@ -21,5 +22,6 @@ namespace BackEndCupons.Models
         public int? MinimumPurchaseAmount { get; set; }
         public int? MaximumDiscountAmount { get; set; }
         public int IdMarketingUser { get; set;}
+        public ICollection<Coupons_MarketplaceUser> Coupons_MarketplaceUser { get; set; }
     }
 }
