@@ -11,7 +11,7 @@ namespace BackEndCupons.Data
     {
         public CouponsContext(DbContextOptions<CouponsContext> options): base(options)
         {
-
+     
         }
 
         public DbSet<Coupons_MarketplaceUser>Coupons_MarketplaceUser { get; set; }

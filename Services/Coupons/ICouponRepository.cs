@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using BackEndCupons.Models;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BackEndCupons.Services.Coupons
 {
@@ -12,6 +13,6 @@ namespace BackEndCupons.Services.Coupons
         void Add(Coupon coupon);
         void Remove(int id, int userId);  // Modificado para incluir el ID del usuario
         void Update(Coupon coupon, int id, int userId);
-    
+        Task <string> RedeemCoupon(string couponCode, int idMarketplaceUser); 
     }
 }
