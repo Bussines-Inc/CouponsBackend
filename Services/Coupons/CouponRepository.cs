@@ -22,7 +22,7 @@ namespace BackEndCupons.Services.Coupons
         {
 
             coupon.Status = "Created";
-            coupon.amount_uses = 0;
+            coupon.ammount_uses = 0;
             coupon.CreationDate = DateTime.UtcNow;
 
             _context.Coupon.Add(coupon);
@@ -110,7 +110,7 @@ namespace BackEndCupons.Services.Coupons
                 }
                 if (cupon.LimitType == "Limit")
                 {
-                    cupon.amount_uses++;
+                    cupon.ammount_uses++;
                 }
 
                 // Guardar la redención
@@ -137,7 +137,7 @@ namespace BackEndCupons.Services.Coupons
 
         public void Remove(int id, int userId)
         {
-            var coupon = _context.Coupon.FirstOrDefault(c => c.Id == id && c.IdMarketingUser == userId && c.amount_uses == 0);
+            var coupon = _context.Coupon.FirstOrDefault(c => c.Id == id && c.IdMarketingUser == userId && c.ammount_uses == 0);
 
             if (coupon == null)
             {
