@@ -17,7 +17,7 @@ namespace BackEndCupons.Controllers.Coupons
         }
         
         [HttpPut]
-        [Route("api/coupons")]
+        [Route("api/coupons/edit")]
         public IActionResult UpdateCoupons([FromQuery] int id, int idMarketingUser, [FromBody] Coupon coupon)
         {
            try

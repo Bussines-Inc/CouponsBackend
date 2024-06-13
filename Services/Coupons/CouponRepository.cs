@@ -20,12 +20,21 @@ namespace BackEndCupons.Services.Coupons
 
         public void Add(Coupon coupon)
         {
+            try
+            {
             coupon.Status = "Created";
-            coupon.ammount_uses = 0;
+            coupon.amount_uses = 0;
             coupon.CreationDate = DateTime.UtcNow;
                 
             _context.Coupon.Add(coupon);
             _context.SaveChanges();
+            }
+            catch (Exception )
+            {
+                
+                throw new Exception("No se puede crear el cupón");
+            }
+
                 
             }
 
@@ -60,7 +69,7 @@ namespace BackEndCupons.Services.Coupons
                 }
                 else
                 {
-                    throw new Exception("Cupon no encontrado");
+                    return null;
                 }
             }
 
@@ -111,7 +120,7 @@ namespace BackEndCupons.Services.Coupons
                 }
                 if (cupon.LimitType == "Limit")
                 {
-                    cupon.ammount_uses++;
+                    cupon.amount_uses++;
                 }
 
                 // Guardar la redención
@@ -138,20 +147,15 @@ namespace BackEndCupons.Services.Coupons
 
         public void Remove(int id, int userId)
         {
-            var coupon = _context.Coupon.FirstOrDefault(c => c.Id == id && c.IdMarketingUser == userId && c.ammount_uses == 0);
+            var coupon = _context.Coupon.FirstOrDefault(c => c.Id == id && c.IdMarketingUser == userId && c.amount_uses == 0);
 
                 if (coupon == null)
                 {
-                    throw new Exception("Cupón no encontrado o no tienes permiso para eliminarlo");
+                    throw new Exception("Este cupon no se puede eliminar ya que ya ha sido usado");
                 }
-
+                
             _context.Coupon.Remove(coupon);
             _context.SaveChanges();
-        }
-
-        public void remove(int id, int Idmarketinguser)
-        {
-            throw new NotImplementedException();
         }
 
         public IEnumerable<Coupon> Search()
@@ -159,7 +163,7 @@ namespace BackEndCupons.Services.Coupons
             throw new NotImplementedException();
         }
 
-        public void update(Coupon coupon, int id, int Idmarketinguser)
+        public void Update(Coupon coupon, int id, int Idmarketinguser)
         {
 
             var couponResult = _context.Coupon.FirstOrDefault(c=>c.Id == id && c.IdMarketingUser == Idmarketinguser);
@@ -173,6 +177,7 @@ namespace BackEndCupons.Services.Coupons
                 couponResult.DiscountRate = coupon.DiscountRate;
                 couponResult.DiscountValue = coupon.DiscountValue;
                 couponResult.LimitType = coupon.LimitType;
+                couponResult.Status = coupon.Status;
                 couponResult.MaximumUses = coupon.MaximumUses;
                 couponResult.MinimumPurchaseAmount = coupon.MinimumPurchaseAmount;
                 couponResult.MaximumDiscountAmount = coupon.MaximumDiscountAmount;
@@ -187,7 +192,9 @@ namespace BackEndCupons.Services.Coupons
                 }
 
             }
-        }
+
+      
+    }
     }
 
 //  if (couponResult.ammount_uses < couponResult.MaximumUses)
