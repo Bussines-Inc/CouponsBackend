@@ -16,14 +16,22 @@ namespace BackEndCupons.Controllers.Coupons
         }
 
         [HttpDelete]
-        [Route("api/DeleteCoupon/{id}")]
+        [Route("api/DeleteCoupon/{id}/{idMarketingUser}")]
 
-        public IActionResult DeleteCoupon(int id, [FromBody] MarketingUser user)
+        public IActionResult DeleteCoupon(int id, int idMarketingUser)
         {
             try
             {
-                _couponRepository.Remove(id, user.Id);
-                return Ok(new { message = "Cupón eliminado con éxito" });
+                var coupon = _couponRepository.GetById(id);
+                if (coupon != null && coupon.IdMarketingUser ==  idMarketingUser)
+                {
+                    _couponRepository.Remove(id, idMarketingUser);
+                    return Ok(new { message = "Cupón eliminado con éxito" });
+                }
+                else
+                {
+                    return BadRequest("No tienes permiso de eliminarlo");
+                }
             }
             catch (Exception ex)
             {

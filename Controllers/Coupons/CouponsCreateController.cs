@@ -27,7 +27,7 @@ namespace BackEndCupons.Controllers.Coupons
             }
             catch (Exception ex)
             {
-                return BadRequest(ModelState);
+                return BadRequest(ex.Message);
               
             }
            

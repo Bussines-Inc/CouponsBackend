@@ -45,11 +45,18 @@ namespace BackEndCupons.Controllers.Coupons
         {
             try
             {
-                return Ok(_couponrepository.GetById(id));
+                var coupons = _couponrepository.GetById(id);
+                if (coupons == null){
+                        return StatusCode(404, "Cupón no encontrado");
+                }
+                else{
+                    return Ok(coupons);
+                }
+                
             }
             catch (Exception ex)
             {
-                return StatusCode(203, ex.Message);
+                return StatusCode(500, ex.Message);
             }
         }
 

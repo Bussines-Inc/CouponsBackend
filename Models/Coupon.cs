@@ -14,7 +14,7 @@ namespace BackEndCupons.Models
         public string CouponCode { get; set; }
         [Required]
         public string Description { get; set; }
-        public int ammount_uses { get; set; }
+        public int amount_uses { get; set; }
         public DateTime CreationDate { get; set; }
         [Required]
         public DateTime StartDate { get; set; }
